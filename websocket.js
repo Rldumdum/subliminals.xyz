@@ -14,9 +14,9 @@ server.listen(3000, function () {
 process.on("SIGINT", () => {
   console.log("Shutting down server");
 
-  wss.clients.forEach(function each(client){
-      client.close();
-  })
+  wss.clients.forEach(function each(client) {
+    client.close();
+  });
   server.close(() => {
     shutdownDB();
   });
@@ -39,7 +39,7 @@ wss.on("connection", function connection(ws) {
 
   db.run(`INSERT INTO visitors (count, time)
     VALUES (${numClients}, datetime('now'))
-  `)
+  `);
 
   ws.on("close", function close() {
     wss.broadcast(`Current vistors ${numClients}`);
@@ -56,11 +56,11 @@ wss.broadcast = function broadcast(data) {
 // end websocket
 // begin db
 const sqlite = require("sqlite3");
-const db = new sqlite.Database(":memory:");
+const db = new sqlite.Database("visitors.db");
 
 db.serialize(() => {
   db.run(`
-        CREATE TABLE visitors (
+        CREATE TABLE IF NOT EXISTS visitors (
             count INTEGER,
             time TEXT
         ) 
