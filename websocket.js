@@ -56,7 +56,8 @@ wss.broadcast = function broadcast(data) {
 // end websocket
 // begin db
 const sqlite = require("sqlite3");
-const db = new sqlite.Database("visitors.db");
+const db = new sqlite.Database("./visitors.db");
+
 
 db.serialize(() => {
   db.run(`

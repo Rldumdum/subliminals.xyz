@@ -1,10 +1,14 @@
-const http = require('http');
+const express = require("express");
+const path = require('path')
+const app = express();
+const PORT = 3000;
 
-http.createServer(function(req,res){
-res.write("On the way to being full snack engineer");
-	res.end();
+app.listen(PORT, () => {
+	console.log("server started on port 3000");
+});
 
-}
-).listen(3000);
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/index.html'));
+});
 
-console.log('server started on port 3000');
+
